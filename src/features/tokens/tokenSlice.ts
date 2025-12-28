@@ -3,10 +3,14 @@ import { Token } from "./types";
 
 interface TokenState {
   tokens: Record<string, Token>;
+  search: string;
+  favorites: string[]; // ⭐ token IDs
 }
 
 const initialState: TokenState = {
   tokens: {},
+  search: "",
+  favorites: [],
 };
 
 const tokenSlice = createSlice({
@@ -18,17 +22,23 @@ const tokenSlice = createSlice({
         state.tokens[token.id] = token;
       });
     },
-    updateTokenPrice(
-      state,
-      action: PayloadAction<{ id: string; price: number }>
-    ) {
-      const token = state.tokens[action.payload.id];
-      if (token) {
-        token.price = action.payload.price;
+
+    setSearch(state, action: PayloadAction<string>) {
+      state.search = action.payload.toLowerCase();
+    },
+
+    toggleFavorite(state, action: PayloadAction<string>) {
+      const id = action.payload;
+      if (state.favorites.includes(id)) {
+        state.favorites = state.favorites.filter(f => f !== id);
+      } else {
+        state.favorites.push(id);
       }
     },
   },
 });
 
-export const { setTokens, updateTokenPrice } = tokenSlice.actions;
+export const { setTokens, setSearch, toggleFavorite } =
+  tokenSlice.actions;
+
 export default tokenSlice.reducer;
