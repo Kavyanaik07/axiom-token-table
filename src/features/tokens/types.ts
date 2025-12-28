@@ -7,4 +7,8 @@ export interface Token {
   price: number;
   change: number;
   category: TokenCategory;
+
+  // ✅ ADD THESE (optional, safe)
+  marketCap?: number;
+  volume?: number;
 }
