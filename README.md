@@ -1,51 +1,81 @@
-# Real-Time Token Trading Table
+# Token Trading Table – Axiom Trade (Frontend Task)
 
-A real-time token discovery dashboard inspired by modern crypto trading platforms.
-This project focuses on **state management, performance optimization, and real-time UI updates**.
+A pixel-inspired, high-performance token discovery dashboard built with **Next.js 14**, designed to replicate Axiom Trade’s token table experience with real-time updates, smooth interactions, and scalable architecture.
+
+---
+
+##  Live Demo
+ (Add your Vercel link here after deployment)
+
+---
+
+##  Demo Video
+ (Add your 1–2 min YouTube demo link here)
 
 ---
 
 ## Features
 
-- Categorized token columns:
+### Core Functionality
+- Token discovery table with categorized columns:
   - New Pairs
   - Final Stretch
   - Migrated
-- Live price updates using WebSocket mock
-- Optimized rendering using memoized components
-- Visual price movement indicators (green/red flash)
-- Global state management with Redux Toolkit
-- Data fetching and caching with React Query
-- Tooltip & Popover interactions (Radix UI)
-- Error handling with Next.js error boundaries
-- Dark mode UI using Tailwind CSS
+- Real-time price updates using a WebSocket mock
+- Smooth price change animations (green/red flash)
+- Sorting by name, price, and percentage change
+- Global search across token name and symbol
+
+### Advanced UI / UX
+- Favorites (pin/unpin tokens)
+- Favorites persist across page reloads (localStorage)
+- Tooltips and popovers for detailed token info
+- Skeleton loaders and empty-state messages
+- Fully responsive (down to 320px width)
+
+### Performance & Architecture
+- Redux Toolkit for global state management
+- React Query (v5) for data fetching & caching
+- Memoized selectors (`createSelector`) to avoid unnecessary re-renders
+- Memoized components (`React.memo`)
+- Zero layout shifts (CLS-safe)
+- Optimized for Lighthouse performance
+
+---
+
+## Design Decisions
+
+### State Management
+- **Redux Toolkit** is used for UI and application state (tokens, search, favorites).
+- **React Query** handles async data fetching and caching.
+- WebSocket updates are handled as side effects without polluting UI logic.
+
+### Performance
+- Derived state (filtered tokens, favorites) is computed using memoized selectors.
+- Components are designed to be reusable and atomic.
+- Strict separation between UI, state, and data layers.
+
+### Accessibility
+- Keyboard-accessible buttons
+- Semantic HTML structure
+- Tooltips and popovers built with Radix UI for accessibility
 
 ---
 
 ## Tech Stack
 
-- Framework: Next.js (App Router)
-- Language: TypeScript
-- State Management: Redux Toolkit
-- Data Fetching: React Query
-- Real-Time Updates: WebSocket (mock implementation)
-- UI: Tailwind CSS, Radix UI
+- **Next.js 14 (App Router)**
+- **TypeScript (strict mode)**
+- **Tailwind CSS**
+- **Redux Toolkit**
+- **React Query (TanStack v5)**
+- **Radix UI**
+- **WebSocket (mocked)**
 
 ---
 
-## Architecture Overview
+## Getting Started
 
-1. Initial token data is fetched using React Query.
-2. Tokens are normalized and stored in Redux as a `Record`.
-3. A WebSocket mock streams live price updates.
-4. Only affected rows re-render due to memoization.
-5. Tooltip and popover components provide extra token insights.
-6. Sorting and categorization are handled at the component level.
-
----
-
-## Run Locally
-
+### Install dependencies
 ```bash
 npm install
-npm run dev

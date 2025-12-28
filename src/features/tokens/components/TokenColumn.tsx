@@ -43,6 +43,8 @@ export default function TokenColumn({
     }
   };
 
+  const showSkeleton = isLoading || sortedTokens.length === 0;
+
   return (
     <div className="rounded-xl border border-zinc-800 bg-zinc-950">
       {/* Header */}
@@ -75,7 +77,7 @@ export default function TokenColumn({
 
       {/* Rows */}
       <div className="divide-y divide-zinc-800">
-        {isLoading ? (
+        {showSkeleton ? (
           <Skeleton />
         ) : (
           sortedTokens.map(token => (

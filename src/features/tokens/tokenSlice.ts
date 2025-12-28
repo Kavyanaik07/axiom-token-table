@@ -10,7 +10,10 @@ interface TokenState {
 const initialState: TokenState = {
   tokens: {},
   search: "",
-  favorites: [],
+  favorites:
+    typeof window !== "undefined"
+      ? JSON.parse(localStorage.getItem("favorites") || "[]")
+      : [],
 };
 
 const tokenSlice = createSlice({
@@ -29,11 +32,18 @@ const tokenSlice = createSlice({
 
     toggleFavorite(state, action: PayloadAction<string>) {
       const id = action.payload;
+
       if (state.favorites.includes(id)) {
         state.favorites = state.favorites.filter(f => f !== id);
       } else {
         state.favorites.push(id);
       }
+
+      // ⭐ persist favorites
+      localStorage.setItem(
+        "favorites",
+        JSON.stringify(state.favorites)
+      );
     },
   },
 });
