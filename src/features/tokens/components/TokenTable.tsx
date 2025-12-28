@@ -11,10 +11,10 @@ import { RootState } from "@/src/store";
 export default function TokenTable() {
   const dispatch = useDispatch();
 
-  // 🔴 Subscribe to WebSocket updates
+  // Subscribe to WebSocket updates
   useTokenStream();
 
-  // 🔴 Read tokens from Redux (Record → Array)
+  // Read tokens from Redux (Record → Array)
   const tokenMap = useSelector(
     (state: RootState) => state.tokens.tokens
   );

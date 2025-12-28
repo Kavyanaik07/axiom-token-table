@@ -24,3 +24,7 @@ export const fetchTokens = async (): Promise<Token[]> => {
       symbol: "SOL",
       price: 148,
       change: 2.91,
+      category: "migrated",
+    },
+  ];
+};
