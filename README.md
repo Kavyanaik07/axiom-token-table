@@ -4,16 +4,6 @@ A pixel-inspired, high-performance token discovery dashboard built with **Next.j
 
 ---
 
-##  Live Demo
- (Add your Vercel link here after deployment)
-
----
-
-##  Demo Video
- (Add your 1–2 min YouTube demo link here)
-
----
-
 ## Features
 
 ### Core Functionality
