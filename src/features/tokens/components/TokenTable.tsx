@@ -14,8 +14,10 @@ export default function TokenTable() {
   // 🔴 Subscribe to WebSocket updates
   useTokenStream();
 
-  // 🔴 Read from Redux (Record → Array)
-  const tokenMap = useSelector((state: RootState) => state.tokens.tokens);
+  // 🔴 Read tokens from Redux (Record → Array)
+  const tokenMap = useSelector(
+    (state: RootState) => state.tokens.tokens
+  );
   const tokens = Object.values(tokenMap);
 
   const { isLoading } = useQuery({
@@ -24,23 +26,22 @@ export default function TokenTable() {
     onSuccess: data => dispatch(setTokens(data)),
   });
 
-  if (isLoading && tokens.length === 0) {
-    return <div className="text-zinc-400">Loading tokens...</div>;
-  }
-
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
       <TokenColumn
         title="New Pairs"
         tokens={tokens.filter(t => t.category === "new")}
+        isLoading={isLoading}
       />
       <TokenColumn
         title="Final Stretch"
         tokens={tokens.filter(t => t.category === "final")}
+        isLoading={isLoading}
       />
       <TokenColumn
         title="Migrated"
         tokens={tokens.filter(t => t.category === "migrated")}
+        isLoading={isLoading}
       />
     </div>
   );

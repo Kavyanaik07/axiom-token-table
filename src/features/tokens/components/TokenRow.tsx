@@ -11,18 +11,22 @@ function TokenRow({ token }: { token: Token }) {
   const [flash, setFlash] = useState<"up" | "down" | null>(null);
 
   useEffect(() => {
-    if (token.price > prevPrice.current) setFlash("up");
-    else if (token.price < prevPrice.current) setFlash("down");
+    if (token.price > prevPrice.current) {
+      setFlash("up");
+    } else if (token.price < prevPrice.current) {
+      setFlash("down");
+    }
 
     prevPrice.current = token.price;
-    const t = setTimeout(() => setFlash(null), 400);
-    return () => clearTimeout(t);
+    const timeout = setTimeout(() => setFlash(null), 400);
+    return () => clearTimeout(timeout);
   }, [token.price]);
 
   return (
     <Popover.Root>
       <Tooltip.Provider delayDuration={200}>
         <Tooltip.Root>
+          {/* Trigger */}
           <Tooltip.Trigger asChild>
             <Popover.Trigger asChild>
               <div
@@ -35,7 +39,9 @@ function TokenRow({ token }: { token: Token }) {
               >
                 <div>
                   <div className="font-medium">{token.name}</div>
-                  <div className="text-xs text-zinc-400">{token.symbol}</div>
+                  <div className="text-xs text-zinc-400">
+                    {token.symbol}
+                  </div>
                 </div>
 
                 <div className="text-right">
@@ -63,31 +69,52 @@ function TokenRow({ token }: { token: Token }) {
           </Tooltip.Trigger>
 
           {/* TOOLTIP */}
-          <Tooltip.Content
-            side="right"
-            className="rounded bg-zinc-800 px-3 py-2 text-xs text-zinc-200 shadow"
-          >
-            <div>Market Cap: ${token.marketCap?.toLocaleString()}</div>
-            <div>Volume: ${token.volume?.toLocaleString()}</div>
-          </Tooltip.Content>
+          <Tooltip.Portal>
+            <Tooltip.Content
+              side="right"
+              align="center"
+              className="rounded bg-zinc-800 px-3 py-2 text-xs text-zinc-200 shadow-lg"
+            >
+              <div>
+                Market Cap:{" "}
+                <span className="text-white">
+                  ${token.marketCap?.toLocaleString() ?? "—"}
+                </span>
+              </div>
+              <div>
+                Volume:{" "}
+                <span className="text-white">
+                  ${token.volume?.toLocaleString() ?? "—"}
+                </span>
+              </div>
+              <Tooltip.Arrow className="fill-zinc-800" />
+            </Tooltip.Content>
+          </Tooltip.Portal>
         </Tooltip.Root>
       </Tooltip.Provider>
 
       {/* POPOVER */}
-      <Popover.Content
-        side="right"
-        className="w-64 rounded-lg border border-zinc-800 bg-zinc-950 p-4 text-sm shadow-lg"
-      >
-        <div className="mb-2 font-semibold">{token.name}</div>
-        <div className="text-zinc-400">Symbol: {token.symbol}</div>
-        <div className="text-zinc-400">Price: ${token.price}</div>
-        <div className="text-zinc-400">
-          Change: {token.change.toFixed(2)}%
-        </div>
-        <div className="text-zinc-400">
-          Category: {token.category.toUpperCase()}
-        </div>
-      </Popover.Content>
+      <Popover.Portal>
+        <Popover.Content
+          side="right"
+          align="center"
+          className="w-64 rounded-lg border border-zinc-800 bg-zinc-950 p-4 text-sm shadow-xl"
+        >
+          <div className="mb-2 font-semibold text-white">
+            {token.name}
+          </div>
+          <div className="text-zinc-400">Symbol: {token.symbol}</div>
+          <div className="text-zinc-400">
+            Price: ${token.price.toLocaleString()}
+          </div>
+          <div className="text-zinc-400">
+            Change: {token.change.toFixed(2)}%
+          </div>
+          <div className="text-zinc-400">
+            Category: {token.category.toUpperCase()}
+          </div>
+        </Popover.Content>
+      </Popover.Portal>
     </Popover.Root>
   );
 }

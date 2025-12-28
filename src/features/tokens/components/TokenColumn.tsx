@@ -2,6 +2,7 @@
 
 import { Token } from "../types";
 import TokenRow from "./TokenRow";
+import Skeleton from "@/src/components/Skeleton";
 import { useMemo, useState } from "react";
 import clsx from "clsx";
 
@@ -11,9 +12,14 @@ type SortOrder = "asc" | "desc";
 interface Props {
   title: string;
   tokens: Token[];
+  isLoading?: boolean;
 }
 
-export default function TokenColumn({ title, tokens }: Props) {
+export default function TokenColumn({
+  title,
+  tokens,
+  isLoading = false,
+}: Props) {
   const [sortKey, setSortKey] = useState<SortKey>("price");
   const [sortOrder, setSortOrder] = useState<SortOrder>("desc");
 
@@ -41,7 +47,9 @@ export default function TokenColumn({ title, tokens }: Props) {
     <div className="rounded-xl border border-zinc-800 bg-zinc-950">
       {/* Header */}
       <div className="border-b border-zinc-800 px-3 py-2">
-        <h2 className="mb-2 text-sm font-semibold text-zinc-300">{title}</h2>
+        <h2 className="mb-2 text-sm font-semibold text-zinc-300">
+          {title}
+        </h2>
 
         <div className="flex gap-3 text-xs text-zinc-400">
           <button
@@ -67,9 +75,13 @@ export default function TokenColumn({ title, tokens }: Props) {
 
       {/* Rows */}
       <div className="divide-y divide-zinc-800">
-        {sortedTokens.map(token => (
-          <TokenRow key={token.id} token={token} />
-        ))}
+        {isLoading ? (
+          <Skeleton />
+        ) : (
+          sortedTokens.map(token => (
+            <TokenRow key={token.id} token={token} />
+          ))
+        )}
       </div>
     </div>
   );
